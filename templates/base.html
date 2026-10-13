@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}PetalBank{% endblock %} · Cute Banking Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="petal petal-a">✿</div><div class="petal petal-b">✧</div><div class="petal petal-c">❀</div><div class="petal petal-d">✿</div>
+{% if session.get('user_id') %}
+<aside class="sidebar">
+<a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-flower">✿</span><span>petal<span class="brand-bank">bank</span><small>YOUR LITTLE MONEY GARDEN</small></span></a>
+<div class="side-label">YOUR SPACE</div>
+<nav>
+<a class="{{ 'active' if request.endpoint == 'dashboard' else '' }}" href="{{ url_for('dashboard') }}"><span>⌂</span> My dashboard</a>
+<a class="{{ 'active' if request.endpoint == 'history' else '' }}" href="{{ url_for('history') }}"><span>♡</span> Transaction diary</a>
+<a class="{{ 'active' if request.endpoint == 'goals_page' else '' }}" href="{{ url_for('goals_page') }}"><span>🌷</span> Savings goals</a>
+<a class="{{ 'active' if request.endpoint == 'summary' else '' }}" href="{{ url_for('summary') }}"><span>✧</span> Money insights</a>
+<a href="{{ url_for('export_csv') }}"><span>⇩</span> Export transactions</a>
+</nav>
+<div class="sidebar-bottom"><div class="garden-note"><span>🌼</span><div><b>Little steps bloom</b><small>Every rupee has a story.</small></div></div>
+<div class="profile-mini"><span class="avatar">{{ session.get('user_name','U')[:1]|upper }}</span><div class="profile-text"><b>{{ session.get('user_name','User') }}</b><small>{{ session.get('user_email','') }}</small></div></div>
+<form action="{{ url_for('logout') }}" method="post"><button class="logout-btn" type="submit">↗ &nbsp; Sign out</button></form></div>
+</aside>
+{% endif %}
+<main class="{{ 'main-with-sidebar' if session.get('user_id') else 'main-auth' }}">
+{% if session.get('user_id') %}
+<header class="topbar"><div><span class="eyebrow">A LITTLE SPACE FOR YOUR MONEY ✿</span><h2>{% block page_heading %}Your dashboard{% endblock %}</h2></div><div class="topbar-right"><span class="sunny">☼</span><div><b>Hi, {{ session.get('user_name','friend').split()[0] }}!</b><small>You're doing lovely.</small></div></div></header>
+{% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category,message in messages %}<div class="flash {{ category }}"><span>{{ '♡' if category == 'success' else '!' }}</span>{{ message }}<button onclick="this.parentElement.remove()" aria-label="Dismiss">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+<footer class="footer"><span>✿ PETALBANK · PHASE 3</span><span>Made for learning, with a little extra love ♡ · Not a real bank</span></footer>
+</main>
+<script>
+document.querySelectorAll('form[data-confirm]').forEach(form=>form.addEventListener('submit',e=>{if(!confirm(form.dataset.confirm))e.preventDefault()}));
+document.querySelectorAll('[data-current-date]').forEach(el=>el.textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}));
+document.querySelectorAll('[data-toggle-password]').forEach(btn=>btn.addEventListener('click',()=>{const input=document.getElementById(btn.dataset.togglePassword);if(input){input.type=input.type==='password'?'text':'password';btn.textContent=input.type==='password'?'Show':'Hide'}}));
+</script>
+</body></html>

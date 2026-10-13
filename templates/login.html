@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Welcome{% endblock %}
+{% block content %}
+<section class="auth-layout">
+<div class="auth-art"><div class="auth-brand"><span class="brand-flower">✿</span> petalbank</div><div class="art-center"><div class="flower-bouquet">🌷</div><span class="tiny-spark spark-one">✧</span><span class="tiny-spark spark-two">✿</span><span class="tiny-spark spark-three">♡</span><span class="art-pill">YOUR MONEY, YOUR LITTLE GARDEN</span><h1>Grow your money<br><em>at your own pace.</em></h1><p>A softer, sweeter way to keep track of your money goals.</p><div class="art-chips"><span>♡ Your own account</span><span>✿ Cute & simple</span></div></div><div class="art-foot">A STUDENT PROJECT BLOOMING WITH CARE</div></div>
+<div class="auth-form-side"><div class="auth-card"><div class="card-flower">🌸</div><span class="eyebrow">WELCOME BACK, FRIEND</span><h2>Let's pick up<br>where you left off.</h2><p class="muted">Sign in to visit your money garden.</p>
+<form method="post" class="form-stack"><div><label for="email">EMAIL ADDRESS</label><input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email"></div><div><label for="password">YOUR PASSWORD</label><div class="password-wrap"><input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password"><button type="button" data-toggle-password="password">Show</button></div></div><button class="primary-btn full-btn" type="submit">Open my garden <span>♡</span></button></form>
+<div class="auth-switch">New around here? <a href="{{ url_for('register') }}">Create your account ✿</a></div><div class="safe-note">🔒 &nbsp; Your password is stored as a secure hash in this demo.</div></div></div>
+</section>
+{% endblock %}
